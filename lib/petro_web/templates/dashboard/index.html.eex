@@ -1,0 +1,9 @@
+<h1>Welcome to Dashboard, <%= Pow.current_user(@conn).email %></h1>
+
+<ul>
+  <%= for company <- current_user(@conn).companies do %>
+    <span><%= link "Open #{company.name}", to: Routes.company_path(@conn, :show, company.id) %> </span><br>
+  <% end %>
+</ul>
+
+<span><%= link "Open a new company", to: Routes.company_path(@conn, :new) %></span>
