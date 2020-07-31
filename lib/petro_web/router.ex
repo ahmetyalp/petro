@@ -15,6 +15,10 @@ defmodule PetroWeb.Router do
       error_handler: Pow.Phoenix.PlugErrorHandler
   end
 
+  pipeline :protect_company do
+    plug PetroWeb.Plugs.CompanyUserChecker
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -23,7 +27,13 @@ defmodule PetroWeb.Router do
     pipe_through [:browser, :protected]
 
     get "/dashboard", DashboardController, :index
-    resources "/", CompanyController, except: [:index, :delete]
+
+    scope "/" do
+      pipe_through :protect_company
+      resources "/", CompanyController, param: "company_id", except: [:index, :delete] do
+        resources "/teams", TeamController
+      end
+    end
   end
 
   scope "/" do

@@ -9,5 +9,6 @@ defmodule Petro.Repo.Migrations.CreateCompaniesUsers do
       timestamps()
     end
 
+    create unique_index(:companies_users, [:company_id, :user_id])
   end
 end

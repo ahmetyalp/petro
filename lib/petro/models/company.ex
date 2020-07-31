@@ -4,10 +4,12 @@ defmodule Petro.Models.Company do
 
   alias Petro.Models.User
   alias Petro.Models.CompaniesUsers
+  alias Petro.Models.Team
 
   schema "companies" do
     field :name, :string
     many_to_many :users, User, join_through: CompaniesUsers
+    has_many :teams, Team
 
     timestamps()
   end
@@ -16,7 +18,6 @@ defmodule Petro.Models.Company do
   def changeset(company, attrs) do
     company
     |> cast(attrs, [:name])
-    |> cast_assoc(:users)
     |> validate_required([:name])
   end
 end

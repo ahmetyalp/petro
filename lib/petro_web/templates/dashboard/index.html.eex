@@ -1,4 +1,4 @@
-<h1>Welcome to Dashboard, <%= Pow.current_user(@conn).email %></h1>
+<h1>Welcome to Dashboard, <%= current_user(@conn).email %></h1>
 
 <ul>
   <%= for company <- current_user(@conn).companies do %>
