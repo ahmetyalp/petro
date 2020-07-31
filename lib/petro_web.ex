@@ -24,6 +24,8 @@ defmodule PetroWeb do
       import Plug.Conn
       import PetroWeb.Gettext
       alias PetroWeb.Router.Helpers, as: Routes
+
+      alias Pow.Plug, as: Pow
     end
   end
 
@@ -39,6 +41,8 @@ defmodule PetroWeb do
 
       # Include shared imports and aliases for views
       unquote(view_helpers())
+
+      alias Pow.Plug, as: Pow
     end
   end
 

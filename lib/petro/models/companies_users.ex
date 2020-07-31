@@ -14,5 +14,6 @@ defmodule Petro.Models.CompaniesUsers do
     companies_users
     |> cast(attrs, [:company_id, :user_id])
     |> validate_required([:company_id, :user_id])
+    |> unique_constraint([:company_id, :user_id])
   end
 end

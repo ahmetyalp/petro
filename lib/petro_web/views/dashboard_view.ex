@@ -1,6 +1,5 @@
 defmodule PetroWeb.DashboardView do
   use PetroWeb, :view
-  alias Pow.Plug, as: Pow
   alias Petro.Repo
   alias Petro.Models.User
 
