@@ -1,0 +1,28 @@
+<h1>Listing Retros</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Due date</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for retro <- @retros do %>
+    <tr>
+      <td><%= retro.name %></td>
+      <td><%= retro.due_date %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.team_retro_path(@conn, :show, @current_company, @current_team, retro) %></span>
+        <span><%= link "Edit", to: Routes.team_retro_path(@conn, :edit, @current_company, @current_team,retro) %></span>
+        <span><%= link "Delete", to: Routes.team_retro_path(@conn, :delete, @current_company, @current_team, retro), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Retro", to: Routes.team_retro_path(@conn, :new, @current_company, @current_team) %></span>

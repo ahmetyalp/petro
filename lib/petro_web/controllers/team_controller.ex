@@ -5,9 +5,9 @@ defmodule PetroWeb.TeamController do
   alias Petro.Models.Team
   alias Petro.Repo
 
-  plug  PetroWeb.Plugs.FetchCurrentCompany, :teams when action in [:index]
-  plug  PetroWeb.Plugs.FetchCurrentCompany when action not in [:index]
-  plug  :find_team when action in [:show, :edit, :update, :delete]
+  plug PetroWeb.Plugs.FetchCurrentCompany, :teams when action in [:index]
+  plug PetroWeb.Plugs.FetchCurrentCompany when action not in [:index]
+  plug :find_team when action in [:show, :edit, :update, :delete]
 
   def index(conn, _params) do
     company = conn.assigns.current_company
@@ -25,7 +25,7 @@ defmodule PetroWeb.TeamController do
       {:ok, team} ->
         conn
         |> put_flash(:info, "Team created successfully.")
-        |> redirect(to: Routes.company_team_path(conn, :show, conn.assigns.current_company, team))
+        |> redirect(to: Routes.team_path(conn, :show, conn.assigns.current_company, team))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, :new, changeset: changeset)
@@ -50,10 +50,14 @@ defmodule PetroWeb.TeamController do
       {:ok, team} ->
         conn
         |> put_flash(:info, "Team updated successfully.")
-        |> redirect(to: Routes.company_team_path(conn, :show, conn.assigns.current_company, team))
+        |> redirect(to: Routes.team_path(conn, :show, conn.assigns.current_company, team))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :edit, team: team, changeset: changeset, company: conn.assigns.current_company)
+        render(conn, :edit,
+          team: team,
+          changeset: changeset,
+          company: conn.assigns.current_company
+        )
     end
   end
 
@@ -63,7 +67,7 @@ defmodule PetroWeb.TeamController do
 
     conn
     |> put_flash(:info, "Team deleted successfully.")
-    |> redirect(to: Routes.company_team_path(conn, :index, conn.assigns.current_company))
+    |> redirect(to: Routes.team_path(conn, :index, conn.assigns.current_company))
   end
 
   # private
@@ -77,5 +81,4 @@ defmodule PetroWeb.TeamController do
       conn |> redirect(to: Routes.dashboard_path(conn, :index)) |> halt()
     end
   end
-
 end

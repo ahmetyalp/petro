@@ -29,7 +29,7 @@ config :phoenix, :json_library, Jason
 config :petro, :pow,
   user: Petro.Models.User,
   repo: Petro.Repo,
-  cache_store_backend: PetroWeb.Pow.RedisCache,
+  # cache_store_backend: PetroWeb.Pow.RedisCache,
   routes_backend: PetroWeb.Pow.Routes
 
 # Import environment specific config. This must remain at the bottom

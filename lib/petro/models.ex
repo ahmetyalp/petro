@@ -3,59 +3,6 @@ defmodule Petro.Models do
   alias Petro.Repo
 
   @doc """
-  Returns the list of companies.
-
-  ## Examples
-
-      iex> list_companies()
-      [%Company{}, ...]
-
-  """
-  def list_companies do
-    Repo.all(Company)
-  end
-
-  @doc """
-  Gets a single company.
-
-  Raises `Ecto.NoResultsError` if the Company does not exist.
-
-  ## Examples
-
-      iex> get_company!(123)
-      %Company{}
-
-      iex> get_company!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_company!(id), do: Repo.get!(Company, id)
-
-  @doc """
-  Creates a company.
-
-  ## Examples
-
-      iex> create_company(%{field: value})
-      {:ok, %Company{}}
-
-      iex> create_company(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_company(attrs \\ %{}) do
-    %Company{}
-    |> Company.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  def create_company!(attrs \\ %{}) do
-    %Company{}
-    |> Company.changeset(attrs)
-    |> Repo.insert!()
-  end
-
-  @doc """
   Updates a company.
 
   ## Examples
@@ -87,19 +34,6 @@ defmodule Petro.Models do
   """
   def delete_company(%Company{} = company) do
     Repo.delete(company)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking company changes.
-
-  ## Examples
-
-      iex> change_company(company)
-      %Ecto.Changeset{data: %Company{}}
-
-  """
-  def change_company(%Company{} = company, attrs \\ %{}) do
-    Company.changeset(company, attrs)
   end
 
   alias Petro.Models.Team
@@ -168,5 +102,70 @@ defmodule Petro.Models do
   """
   def change_team(%Team{} = team, attrs \\ %{}) do
     Team.changeset(team, attrs)
+  end
+
+  alias Petro.Models.Retro
+
+  @doc """
+  Gets a single retro.
+
+  Raises `Ecto.NoResultsError` if the Retro does not exist.
+
+  ## Examples
+
+      iex> get_retro!(123)
+      %Retro{}
+
+      iex> get_retro!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_retro!(id), do: Repo.get!(Retro, id)
+
+  @doc """
+  Updates a retro.
+
+  ## Examples
+
+      iex> update_retro(retro, %{field: new_value})
+      {:ok, %Retro{}}
+
+      iex> update_retro(retro, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_retro(%Retro{} = retro, attrs) do
+    retro
+    |> Retro.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a retro.
+
+  ## Examples
+
+      iex> delete_retro(retro)
+      {:ok, %Retro{}}
+
+      iex> delete_retro(retro)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_retro(%Retro{} = retro) do
+    Repo.delete(retro)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking retro changes.
+
+  ## Examples
+
+      iex> change_retro(retro)
+      %Ecto.Changeset{data: %Retro{}}
+
+  """
+  def change_retro(%Retro{} = retro, attrs \\ %{}) do
+    Retro.changeset(retro, attrs)
   end
 end

@@ -8,6 +8,5 @@ defmodule Petro.Repo.Migrations.CreateTeams do
 
       timestamps()
     end
-
   end
 end

@@ -2,12 +2,16 @@ defmodule Petro.Models.CompaniesUsers do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Petro.Models.Company
+  alias Petro.Models.User
+
   @user_roles ~w(user admin owner)
 
   schema "companies_users" do
-    field :company_id, :integer
-    field :user_id, :integer
     field :role, :string
+
+    belongs_to :user, User
+    belongs_to :company, Company
 
     timestamps()
   end

@@ -8,3 +8,5 @@
   </li>
 
 </ul>
+
+<span><%= link "Retros", to: Routes.team_retro_path(@conn, :index, @current_company, @current_team) %></span>

@@ -110,4 +110,65 @@ defmodule Petro.ModelsTest do
       assert %Ecto.Changeset{} = Models.change_team(team)
     end
   end
+
+  describe "retros" do
+    alias Petro.Models.Retro
+
+    @valid_attrs %{due_date: ~D[2010-04-17], name: "some name"}
+    @update_attrs %{due_date: ~D[2011-05-18], name: "some updated name"}
+    @invalid_attrs %{due_date: nil, name: nil}
+
+    def retro_fixture(attrs \\ %{}) do
+      {:ok, retro} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Models.create_retro()
+
+      retro
+    end
+
+    test "list_retros/0 returns all retros" do
+      retro = retro_fixture()
+      assert Models.list_retros() == [retro]
+    end
+
+    test "get_retro!/1 returns the retro with given id" do
+      retro = retro_fixture()
+      assert Models.get_retro!(retro.id) == retro
+    end
+
+    test "create_retro/1 with valid data creates a retro" do
+      assert {:ok, %Retro{} = retro} = Models.create_retro(@valid_attrs)
+      assert retro.due_date == ~D[2010-04-17]
+      assert retro.name == "some name"
+    end
+
+    test "create_retro/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Models.create_retro(@invalid_attrs)
+    end
+
+    test "update_retro/2 with valid data updates the retro" do
+      retro = retro_fixture()
+      assert {:ok, %Retro{} = retro} = Models.update_retro(retro, @update_attrs)
+      assert retro.due_date == ~D[2011-05-18]
+      assert retro.name == "some updated name"
+    end
+
+    test "update_retro/2 with invalid data returns error changeset" do
+      retro = retro_fixture()
+      assert {:error, %Ecto.Changeset{}} = Models.update_retro(retro, @invalid_attrs)
+      assert retro == Models.get_retro!(retro.id)
+    end
+
+    test "delete_retro/1 deletes the retro" do
+      retro = retro_fixture()
+      assert {:ok, %Retro{}} = Models.delete_retro(retro)
+      assert_raise Ecto.NoResultsError, fn -> Models.get_retro!(retro.id) end
+    end
+
+    test "change_retro/1 returns a retro changeset" do
+      retro = retro_fixture()
+      assert %Ecto.Changeset{} = Models.change_retro(retro)
+    end
+  end
 end

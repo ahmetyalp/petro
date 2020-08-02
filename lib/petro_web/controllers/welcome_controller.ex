@@ -5,6 +5,7 @@ defmodule PetroWeb.WelcomeController do
     case Pow.current_user(conn) do
       nil ->
         render(conn, :index)
+
       _ ->
         conn
         |> redirect(to: Routes.dashboard_path(conn, :index))

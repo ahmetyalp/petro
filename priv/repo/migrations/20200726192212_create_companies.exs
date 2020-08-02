@@ -7,6 +7,5 @@ defmodule Petro.Repo.Migrations.CreateCompanies do
 
       timestamps()
     end
-
   end
 end

@@ -75,6 +75,7 @@ defmodule PetroWeb.TeamControllerTest do
     test "deletes chosen team", %{conn: conn, team: team} do
       conn = delete(conn, Routes.team_path(conn, :delete, team))
       assert redirected_to(conn) == Routes.team_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.team_path(conn, :show, team))
       end

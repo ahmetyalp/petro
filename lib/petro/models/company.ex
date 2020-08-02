@@ -5,6 +5,7 @@ defmodule Petro.Models.Company do
   alias Petro.Models.User
   alias Petro.Models.CompaniesUsers
   alias Petro.Models.Team
+  alias Petro.Repo
 
   schema "companies" do
     field :name, :string
@@ -20,4 +21,16 @@ defmodule Petro.Models.Company do
     |> cast(attrs, [:name])
     |> validate_required([:name])
   end
+
+  def change(%__MODULE__{} = company, attrs \\ %{}) do
+    changeset(company, attrs)
+  end
+
+  def create!(attrs \\ %{}) do
+    %__MODULE__{}
+    |> changeset(attrs)
+    |> Repo.insert!()
+  end
+
+  def get!(id), do: Repo.get!(__MODULE__, id)
 end

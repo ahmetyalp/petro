@@ -27,11 +27,13 @@ defmodule PetroWeb.Router do
     pipe_through [:browser, :protected]
 
     get "/dashboard", DashboardController, :index
+    resources "/", CompanyController, except: [:index, :delete]
 
-    scope "/" do
+    scope "/:company_id" do
       pipe_through :protect_company
-      resources "/", CompanyController, param: "company_id", except: [:index, :delete] do
-        resources "/teams", TeamController
+
+      resources "/teams", TeamController do
+        resources "/retros", RetroController
       end
     end
   end

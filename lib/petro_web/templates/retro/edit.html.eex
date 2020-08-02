@@ -1,0 +1,5 @@
+<h1>Edit Retro</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.team_retro_path(@conn, :update, @current_company,@current_team, @retro)) %>
+
+<span><%= link "Back", to: Routes.team_retro_path(@conn, :index, @current_company, @current_team) %></span>

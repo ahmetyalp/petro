@@ -14,13 +14,13 @@
       <td><%= team.name %></td>
 
       <td>
-        <span><%= link "Show", to: Routes.company_team_path(@conn, :show, @company, team) %></span>
-        <span><%= link "Edit", to: Routes.company_team_path(@conn, :edit, @company, team) %></span>
-        <span><%= link "Delete", to: Routes.company_team_path(@conn, :delete, @company, team), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        <span><%= link "Show", to: Routes.team_path(@conn, :show, @current_company, team) %></span>
+        <span><%= link "Edit", to: Routes.team_path(@conn, :edit, @current_company, team) %></span>
+        <span><%= link "Delete", to: Routes.team_path(@conn, :delete, @current_company, team), method: :delete, data: [confirm: "Are you sure?"] %></span>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<span><%= link "New Team", to: Routes.company_team_path(@conn, :new, @company) %></span>
+<span><%= link "New Team", to: Routes.team_path(@conn, :new, @current_company) %></span>

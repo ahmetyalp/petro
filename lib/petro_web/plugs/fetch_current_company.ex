@@ -7,14 +7,14 @@ defmodule PetroWeb.Plugs.FetchCurrentCompany do
   def init(default), do: default
 
   def call(conn, preload) do
-    company = case preload do
-      nil -> Repo.get!(Company, conn.params["company_id"])
-      _ -> Repo.get!(Company, conn.params["company_id"]) |> Repo.preload(preload)
-    end
+    company =
+      case preload do
+        nil -> Repo.get!(Company, conn.params["company_id"])
+        _ -> Repo.get!(Company, conn.params["company_id"]) |> Repo.preload(preload)
+      end
 
     conn
     |> assign(:current_company, company)
-
   rescue
     e in Ecto.NoResultsError ->
       IO.puts(inspect(e))

@@ -3,8 +3,8 @@ defmodule Petro.Repo.Migrations.CreateCompaniesUsers do
 
   def change do
     create table(:companies_users) do
-      add :company_id, :integer
-      add :user_id, :integer
+      add :company_id, references(:companies)
+      add :user_id, references(:users)
 
       timestamps()
     end
