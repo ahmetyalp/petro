@@ -9,7 +9,9 @@ defmodule Petro.Models.Retro do
   schema "retros" do
     field :due_date, :date
     field :name, :string
+
     belongs_to :team, Team
+    has_one :company, through: [:team, :company]
 
     timestamps()
   end
@@ -18,7 +20,6 @@ defmodule Petro.Models.Retro do
   def changeset(retro, attrs) do
     retro
     |> cast(attrs, [:name, :due_date])
-    |> cast_assoc(:team)
     |> validate_required([:name, :due_date])
   end
 
@@ -27,5 +28,13 @@ defmodule Petro.Models.Retro do
       from r in __MODULE__,
         where: ^[team_id: team.id]
     )
+  end
+
+  def get!(id, preload: preload) do
+    Repo.get!(__MODULE__, id) |> Repo.preload(preload)
+  end
+
+  def get!(id) do
+    Repo.get!(__MODULE__, id)
   end
 end

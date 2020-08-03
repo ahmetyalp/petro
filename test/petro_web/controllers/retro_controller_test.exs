@@ -14,31 +14,31 @@ defmodule PetroWeb.RetroControllerTest do
 
   describe "index" do
     test "lists all retros", %{conn: conn} do
-      conn = get(conn, Routes.team_retro_path(conn, :index))
+      conn = get(conn, Routes.retro_path(conn, :index))
       assert html_response(conn, 200) =~ "Listing Retros"
     end
   end
 
   describe "new retro" do
     test "renders form", %{conn: conn} do
-      conn = get(conn, Routes.team_retro_path(conn, :new))
+      conn = get(conn, Routes.retro_path(conn, :new))
       assert html_response(conn, 200) =~ "New Retro"
     end
   end
 
   describe "create retro" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.team_retro_path(conn, :create), retro: @create_attrs)
+      conn = post(conn, Routes.retro_path(conn, :create), retro: @create_attrs)
 
       assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == Routes.team_retro_path(conn, :show, id)
+      assert redirected_to(conn) == Routes.retro_path(conn, :show, id)
 
-      conn = get(conn, Routes.team_retro_path(conn, :show, id))
+      conn = get(conn, Routes.retro_path(conn, :show, id))
       assert html_response(conn, 200) =~ "Show Retro"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.team_retro_path(conn, :create), retro: @invalid_attrs)
+      conn = post(conn, Routes.retro_path(conn, :create), retro: @invalid_attrs)
       assert html_response(conn, 200) =~ "New Retro"
     end
   end
@@ -47,7 +47,7 @@ defmodule PetroWeb.RetroControllerTest do
     setup [:create_retro]
 
     test "renders form for editing chosen retro", %{conn: conn, retro: retro} do
-      conn = get(conn, Routes.team_retro_path(conn, :edit, retro))
+      conn = get(conn, Routes.retro_path(conn, :edit, retro))
       assert html_response(conn, 200) =~ "Edit Retro"
     end
   end
@@ -56,15 +56,15 @@ defmodule PetroWeb.RetroControllerTest do
     setup [:create_retro]
 
     test "redirects when data is valid", %{conn: conn, retro: retro} do
-      conn = put(conn, Routes.team_retro_path(conn, :update, retro), retro: @update_attrs)
-      assert redirected_to(conn) == Routes.team_retro_path(conn, :show, retro)
+      conn = put(conn, Routes.retro_path(conn, :update, retro), retro: @update_attrs)
+      assert redirected_to(conn) == Routes.retro_path(conn, :show, retro)
 
-      conn = get(conn, Routes.team_retro_path(conn, :show, retro))
+      conn = get(conn, Routes.retro_path(conn, :show, retro))
       assert html_response(conn, 200) =~ "some updated name"
     end
 
     test "renders errors when data is invalid", %{conn: conn, retro: retro} do
-      conn = put(conn, Routes.team_retro_path(conn, :update, retro), retro: @invalid_attrs)
+      conn = put(conn, Routes.retro_path(conn, :update, retro), retro: @invalid_attrs)
       assert html_response(conn, 200) =~ "Edit Retro"
     end
   end
@@ -73,11 +73,11 @@ defmodule PetroWeb.RetroControllerTest do
     setup [:create_retro]
 
     test "deletes chosen retro", %{conn: conn, retro: retro} do
-      conn = delete(conn, Routes.team_retro_path(conn, :delete, retro))
-      assert redirected_to(conn) == Routes.team_retro_path(conn, :index)
+      conn = delete(conn, Routes.retro_path(conn, :delete, retro))
+      assert redirected_to(conn) == Routes.retro_path(conn, :index)
 
       assert_error_sent 404, fn ->
-        get(conn, Routes.team_retro_path(conn, :show, retro))
+        get(conn, Routes.retro_path(conn, :show, retro))
       end
     end
   end

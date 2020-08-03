@@ -73,7 +73,7 @@ defmodule PetroWeb.TeamController do
   # private
 
   defp find_team(%Plug.Conn{} = conn, _) do
-    team = Repo.get!(Team, conn.params["id"])
+    team = Repo.get!(Team, conn.params["id"]) |> Repo.preload(:retros)
 
     if team.company_id == conn.assigns.current_company.id do
       conn |> assign(:current_team, team)

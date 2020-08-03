@@ -3,8 +3,7 @@ defmodule PetroWeb.CompanyController do
   import Ecto.Query, only: [from: 2]
 
   alias Petro.Models
-  alias Petro.Models.Company
-  alias Petro.Models.CompaniesUsers
+  alias Petro.Models.{Company, CompaniesUsers}
   alias Petro.Repo
 
   plug :control_access when action in [:edit, :update]
@@ -77,6 +76,7 @@ defmodule PetroWeb.CompanyController do
       _ ->
         conn
         |> redirect(to: Routes.dashboard_path(conn, :index))
+        |> halt()
     end
   end
 end

@@ -2,9 +2,7 @@ defmodule Petro.Models.Company do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Petro.Models.User
-  alias Petro.Models.CompaniesUsers
-  alias Petro.Models.Team
+  alias Petro.Models.{User, CompaniesUsers, Team}
   alias Petro.Repo
 
   schema "companies" do

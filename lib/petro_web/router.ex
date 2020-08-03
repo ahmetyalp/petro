@@ -32,9 +32,9 @@ defmodule PetroWeb.Router do
     scope "/:company_id" do
       pipe_through :protect_company
 
-      resources "/teams", TeamController do
-        resources "/retros", RetroController
-      end
+      resources "/teams", TeamController
+      resources "/retros", RetroController, except: [:index]
+      resources "/answers", AnswerController, only: [:update, :create, :delete]
     end
   end
 

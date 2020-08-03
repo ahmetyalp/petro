@@ -2,26 +2,29 @@ defmodule PetroWeb.RetroController do
   use PetroWeb, :controller
 
   alias Petro.Models
-  alias Petro.Models.Retro
+  alias Petro.Models.{Retro, Company, Team}
   alias Petro.Repo
-  alias Petro.Models.Team
 
-  plug :find_team
+  plug :find_retro when action not in [:new, :create]
 
-  def index(conn, _params) do
-    retros = Retro.all(conn.assigns.current_team)
-    render(conn, "index.html", retros: retros)
-  end
-
-  def new(conn, _params) do
+  def new(conn, params) do
     changeset = Models.change_retro(%Retro{})
-    render(conn, "new.html", changeset: changeset)
+
+    render(conn, :new,
+      changeset: changeset,
+      action:
+        Routes.retro_path(conn, :create, conn.assigns.current_company, team_id: params["team_id"])
+    )
   end
 
-  def create(conn, %{"retro" => retro_params}) do
+  def create(conn, %{"retro" => retro_params, "team_id" => team_id}) do
+    team = Repo.get!(Team, team_id) |> Repo.preload(:company)
+    company_id = conn.assigns.current_company.id
+    %Company{id: ^company_id} = team.company
+
     retro =
       Ecto.build_assoc(
-        conn.assigns.current_team,
+        team,
         :retros
       )
       |> Retro.changeset(retro_params)
@@ -32,78 +35,79 @@ defmodule PetroWeb.RetroController do
         |> put_flash(:info, "Retro created successfully.")
         |> redirect(
           to:
-            Routes.team_retro_path(
+            Routes.retro_path(
               conn,
               :show,
               conn.assigns.current_company,
-              conn.assigns.current_team,
               retro
             )
         )
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, :new, changeset: changeset)
     end
   end
 
   def show(conn, %{"id" => id}) do
-    retro = Models.get_retro!(id)
-    render(conn, "show.html", retro: retro)
+    render(conn, :show)
   end
 
   def edit(conn, %{"id" => id}) do
-    retro = Models.get_retro!(id)
+    retro = conn.assigns.retro
     changeset = Models.change_retro(retro)
-    render(conn, "edit.html", retro: retro, changeset: changeset)
+    render(conn, :edit, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "retro" => retro_params}) do
-    retro = Models.get_retro!(id)
+    retro = conn.assigns.retro
 
     case Models.update_retro(retro, retro_params) do
       {:ok, retro} ->
         conn
         |> put_flash(:info, "Retro updated successfully.")
+        |> assign(:retro, retro)
         |> redirect(
           to:
-            Routes.team_retro_path(
+            Routes.retro_path(
               conn,
               :show,
               conn.assigns.current_company,
-              conn.assigns.current_team,
               retro
             )
         )
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", retro: retro, changeset: changeset)
+        render(conn, :edit, changeset: changeset)
     end
   end
 
   def delete(conn, %{"id" => id}) do
-    retro = Models.get_retro!(id)
+    retro = conn.assigns.retro
     {:ok, _retro} = Models.delete_retro(retro)
 
     conn
     |> put_flash(:info, "Retro deleted successfully.")
+    |> assign(:retro, nil)
     |> redirect(
       to:
-        Routes.team_retro_path(
+        Routes.team_path(
           conn,
-          :index,
+          :show,
           conn.assigns.current_company,
-          conn.assigns.current_team
+          retro.team
         )
     )
   end
 
-  defp find_team(conn, _params) do
-    case Repo.get(Team, conn.path_params["team_id"]) do
-      nil ->
-        conn |> redirect(to: Routes.dashboard_path(conn, :index)) |> halt()
+  defp find_retro(conn, _params) do
+    retro = Retro.get!(conn.path_params["id"], preload: :company)
 
-      team ->
-        conn |> assign(:current_team, team)
+    cond do
+      retro.company.id == conn.assigns.current_company.id ->
+        conn |> assign(:retro, retro)
+
+      true ->
+        conn |> redirect(to: Routes.dashboard_path(conn, :index)) |> halt()
     end
   end
 end

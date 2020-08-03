@@ -2,8 +2,7 @@ defmodule Petro.Models.CompaniesUsers do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Petro.Models.Company
-  alias Petro.Models.User
+  alias Petro.Models.{Company, User}
 
   @user_roles ~w(user admin owner)
 

@@ -14,5 +14,7 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.team_retro_path(@conn, :edit, @current_company, @current_team, @retro) %></span>
-<span><%= link "Back", to: Routes.team_retro_path(@conn, :index, @current_company, @current_team) %></span>
+<span><%= link "Edit", to: Routes.retro_path(@conn, :edit, @current_company, @retro) %></span>
+<span><%= link "Team", to: Routes.team_path(@conn, :show, @current_company, @retro.team) %></span>
+<span><%= link "Delete", to: Routes.retro_path(@conn, :delete, @current_company, @retro), method: :delete %></span>
+

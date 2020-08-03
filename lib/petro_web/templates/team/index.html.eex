@@ -15,8 +15,6 @@
 
       <td>
         <span><%= link "Show", to: Routes.team_path(@conn, :show, @current_company, team) %></span>
-        <span><%= link "Edit", to: Routes.team_path(@conn, :edit, @current_company, team) %></span>
-        <span><%= link "Delete", to: Routes.team_path(@conn, :delete, @current_company, team), method: :delete, data: [confirm: "Are you sure?"] %></span>
       </td>
     </tr>
 <% end %>

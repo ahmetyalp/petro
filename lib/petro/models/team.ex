@@ -6,6 +6,7 @@ defmodule Petro.Models.Team do
 
   schema "teams" do
     field :name, :string
+
     belongs_to :company, Company
     has_many :retros, Retro
 
