@@ -13,7 +13,7 @@ defmodule PetroWeb.Plugs.CompanyUserChecker do
         from cu in CompaniesUsers,
           where:
             ^[company_id: conn.path_params["company_id"], user_id: Pow.current_user(conn).id],
-          preload: [:company]
+          preload: [:company, :user]
       )
 
     case user_role do

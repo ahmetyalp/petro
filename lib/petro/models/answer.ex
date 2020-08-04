@@ -22,8 +22,8 @@ defmodule Petro.Models.Answer do
   @doc false
   def changeset(answer, attrs) do
     answer
-    |> cast(attrs, [:type, :details])
-    |> validate_required([:type, :details])
+    |> cast(attrs, [:type, :details, :is_visible])
+    |> validate_required([:type, :details, :is_visible])
     |> validate_inclusion(:type, @types)
   end
 end

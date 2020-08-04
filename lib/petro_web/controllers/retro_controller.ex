@@ -7,6 +7,18 @@ defmodule PetroWeb.RetroController do
 
   plug :find_retro when action not in [:new, :create]
 
+  def live(conn, %{"id" => retro_id}) do
+    user_role = conn.assigns.user_role
+
+    live_render(conn, PetroWeb.RetroLive,
+      session: %{
+        "company_id" => user_role.company.id,
+        "retro_id" => retro_id,
+        "user_id" => user_role.user.id
+      }
+    )
+  end
+
   def new(conn, params) do
     changeset = Models.change_retro(%Retro{})
 
@@ -48,17 +60,17 @@ defmodule PetroWeb.RetroController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => _}) do
     render(conn, :show)
   end
 
-  def edit(conn, %{"id" => id}) do
+  def edit(conn, %{"id" => _}) do
     retro = conn.assigns.retro
     changeset = Models.change_retro(retro)
     render(conn, :edit, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "retro" => retro_params}) do
+  def update(conn, %{"id" => _, "retro" => retro_params}) do
     retro = conn.assigns.retro
 
     case Models.update_retro(retro, retro_params) do
@@ -81,7 +93,7 @@ defmodule PetroWeb.RetroController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"id" => _}) do
     retro = conn.assigns.retro
     {:ok, _retro} = Models.delete_retro(retro)
 
@@ -99,7 +111,7 @@ defmodule PetroWeb.RetroController do
     )
   end
 
-  defp find_retro(conn, _params) do
+  defp find_retro(conn, _opts) do
     retro = Retro.get!(conn.path_params["id"], preload: :company)
 
     cond do

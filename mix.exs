@@ -46,7 +46,9 @@ defmodule Petro.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:pow, "~> 1.0.20"},
-      {:redix, "~> 0.9.2"}
+      {:redix, "~> 0.9.2"},
+      {:phoenix_live_view, "~> 0.14.2"},
+      {:floki, ">= 0.0.0", only: :test}
     ]
   end
 

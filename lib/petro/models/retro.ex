@@ -3,7 +3,7 @@ defmodule Petro.Models.Retro do
   import Ecto.Changeset
   import Ecto.Query, only: [from: 2]
 
-  alias Petro.Models.Team
+  alias Petro.Models.{Team, Answer}
   alias Petro.Repo
 
   schema "retros" do
@@ -12,6 +12,10 @@ defmodule Petro.Models.Retro do
 
     belongs_to :team, Team
     has_one :company, through: [:team, :company]
+
+    has_many :answers, Answer
+    has_many :positive_answers, Answer, where: [type: "positive"]
+    has_many :negative_answers, Answer, where: [type: "negative"]
 
     timestamps()
   end

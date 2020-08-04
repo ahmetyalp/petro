@@ -1,0 +1,26 @@
+<h1>Current Retro: <%= @retro.name %></h1>
+
+
+<h3>Positive Answers</h3>
+<ul>
+  <%= for answer <- @retro.positive_answers do %>
+    <%= if answer.is_visible || answer.user_id == @current_user.id do %>
+        <%= answer.details %> - <%= answer.type %>
+        <%= if answer.user_id == @current_user.id do %>
+            <button phx-click="make_visible" phx-value-answerid="<%= answer.id %>"> Make Visible </button>
+        <% end %>
+    <% end %>
+  <% end %>
+</ul>
+
+
+<h3>Negative Answers</h3>
+<ul>
+  <%= for answer <- @retro.negative_answers do %>
+    <%= answer.details %> - <%= answer.type %>
+  <% end %>
+</ul>
+
+<div>
+    <button phx-click="ahmet">Press Me!</button>
+</div>

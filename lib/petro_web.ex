@@ -24,6 +24,7 @@ defmodule PetroWeb do
       import Plug.Conn
       import PetroWeb.Gettext
       alias PetroWeb.Router.Helpers, as: Routes
+      import Phoenix.LiveView.Controller
 
       alias Pow.Plug, as: Pow
     end
@@ -42,7 +43,25 @@ defmodule PetroWeb do
       # Include shared imports and aliases for views
       unquote(view_helpers())
 
+      import Phoenix.LiveView.Helpers
       alias Pow.Plug, as: Pow
+    end
+  end
+
+  def live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {PetroWeb.LayoutView, "live.html"}
+
+      unquote(view_helpers())
+    end
+  end
+
+  def live_component do
+    quote do
+      use Phoenix.LiveComponent
+
+      unquote(view_helpers())
     end
   end
 
@@ -52,6 +71,8 @@ defmodule PetroWeb do
 
       import Plug.Conn
       import Phoenix.Controller
+
+      import Phoenix.LiveView.Router
     end
   end
 
@@ -67,6 +88,8 @@ defmodule PetroWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
+      # Import LiveView helpers (live_render, live_component, live_patch, etc)
+      import Phoenix.LiveView.Helpers
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 

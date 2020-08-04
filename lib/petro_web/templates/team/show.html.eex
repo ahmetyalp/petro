@@ -9,13 +9,13 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.team_path(@conn, :edit, @current_company, @team) %></span>
-<span><%= link "Delete", to: Routes.team_path(@conn, :delete, @current_company, @team), method: :delete, data: [confirm: "Are you sure?"] %></span>
+<span><%= link "Edit Team #{@team.name}", to: Routes.team_path(@conn, :edit, @current_company, @team) %></span>
+<span><%= link "Delete Team #{@team.name}", to: Routes.team_path(@conn, :delete, @current_company, @team), method: :delete, data: [confirm: "Are you sure?"] %></span>
 
 <ul>
   <%= for retro <- @team.retros do %>
-    <span><%= link "Open #{retro.name}", to: Routes.retro_path(@conn, :show, @current_company, retro) %> </span><br>
+    <span><%= link "Go to retro: #{retro.name}", to: Routes.retro_path(@conn, :live, @current_company, retro) %> </span><br>
   <% end %>
 </ul>
 
-<span><%= link "open retro", to: Routes.retro_path(@conn, :new, @current_company, team_id: @team.id) %> </span>
+<span><%= link "New retro", to: Routes.retro_path(@conn, :new, @current_company, team_id: @team.id) %> </span>

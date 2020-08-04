@@ -5,9 +5,10 @@ defmodule PetroWeb.Router do
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_flash
+    plug :fetch_live_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :put_root_layout, {PetroWeb.LayoutView, :root}
   end
 
   pipeline :protected do
@@ -33,8 +34,9 @@ defmodule PetroWeb.Router do
       pipe_through :protect_company
 
       resources "/teams", TeamController
-      resources "/retros", RetroController, except: [:index]
+      resources "/retros", RetroController, except: [:index, :show]
       resources "/answers", AnswerController, only: [:update, :create, :delete]
+      get "/retros/:id", RetroController, :live
     end
   end
 
