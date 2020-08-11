@@ -2,7 +2,6 @@ defmodule PetroWeb.AnswerController do
   use PetroWeb, :controller
 
   alias Petro.Models
-  alias Petro.Models.Answer
 
   # def new(conn, _params) do
   #   changeset = Models.change_answer(%Answer{})
@@ -11,10 +10,10 @@ defmodule PetroWeb.AnswerController do
 
   def create(conn, %{"answer" => answer_params}) do
     case Models.create_answer(answer_params) do
-      {:ok, answer} ->
+      {:ok, _answer} ->
         conn
         |> put_flash(:info, "Answer created successfully.")
-        |> redirect(to: Routes.team_retro_answer_path(conn, :show, answer))
+        # |> redirect(to: Routes.answer_path(conn, :show, conn.assigns.current_company, answer))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -31,10 +30,10 @@ defmodule PetroWeb.AnswerController do
     answer = Models.get_answer!(id)
 
     case Models.update_answer(answer, answer_params) do
-      {:ok, answer} ->
+      {:ok, _answer} ->
         conn
         |> put_flash(:info, "Answer updated successfully.")
-        |> redirect(to: Routes.team_retro_answer_path(conn, :show, answer))
+        # |> redirect(to: Routes.answer_path(conn, :show, answer))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", answer: answer, changeset: changeset)
@@ -47,6 +46,6 @@ defmodule PetroWeb.AnswerController do
 
     conn
     |> put_flash(:info, "Answer deleted successfully.")
-    |> redirect(to: Routes.team_retro_answer_path(conn, :index))
+    # |> redirect(to: Routes.answer_path(conn, :index))
   end
 end

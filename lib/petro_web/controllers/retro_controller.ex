@@ -49,7 +49,7 @@ defmodule PetroWeb.RetroController do
           to:
             Routes.retro_path(
               conn,
-              :show,
+              :live,
               conn.assigns.current_company,
               retro
             )
@@ -82,7 +82,7 @@ defmodule PetroWeb.RetroController do
           to:
             Routes.retro_path(
               conn,
-              :show,
+              :live,
               conn.assigns.current_company,
               retro
             )
