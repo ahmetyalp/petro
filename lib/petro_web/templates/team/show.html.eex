@@ -14,7 +14,7 @@
 
 <ul>
   <%= for retro <- @team.retros do %>
-    <span><%= link "Go to retro: #{retro.name}", to: Routes.retro_path(@conn, :live, @current_company, retro) %> </span><br>
+    <span><%= link "Go to retro: #{retro.name}", to: Routes.answer_index_path(@conn, :index, @current_company,  retro) %> </span><br>
   <% end %>
 </ul>
 

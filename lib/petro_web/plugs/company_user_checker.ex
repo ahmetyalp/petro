@@ -10,7 +10,7 @@ defmodule PetroWeb.Plugs.CompanyUserChecker do
   def call(conn, _) do
     user_role =
       Repo.one(
-        from cu in CompaniesUsers,
+        from CompaniesUsers,
           where:
             ^[company_id: conn.path_params["company_id"], user_id: Pow.current_user(conn).id],
           preload: [:company, :user]

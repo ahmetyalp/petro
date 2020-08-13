@@ -35,7 +35,12 @@ defmodule PetroWeb.Router do
 
       resources "/teams", TeamController
       resources "/retros", RetroController, except: [:index, :show]
-      resources "/answers", AnswerController, only: [:update, :create, :delete]
+
+      scope "/retro/:retro_id" do # user id ekle ve kontrol et. Sonu onu kullan
+        live "/answers", AnswerLive.Index, :index
+        live "/answers/new", AnswerLive.Index, :new
+        live "/answers/:id/edit", AnswerLive.Index, :edit
+      end
       get "/retros/:id", RetroController, :live
     end
   end

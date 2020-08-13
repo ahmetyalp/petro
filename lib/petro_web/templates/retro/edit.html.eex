@@ -2,4 +2,4 @@
 
 <%= render "form.html", Map.put(assigns, :action, Routes.retro_path(@conn, :update, @current_company, @retro)) %>
 
-<span><%= link "Back", to: Routes.retro_path(@conn, :show, @current_company, @retro) %></span>
+<span><%= link "Back", to: Routes.retro_path(@conn, :live, @current_company, @retro) %></span>

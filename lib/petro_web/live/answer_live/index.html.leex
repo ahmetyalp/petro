@@ -1,0 +1,39 @@
+<h1>Listing Answers</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, PetroWeb.AnswerLive.FormComponent,
+    id: @answer.id || :new,
+    title: @page_title,
+    action: @live_action,
+    answer: @answer,
+    retro: @retro,
+    return_to: Routes.answer_index_path(@socket, :index, @current_company,  @retro) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Details</th>
+      <th>Type</th>
+      <th>Is visible</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="answers">
+    <%= for answer <- @answers do %>
+      <tr id="answer-<%= answer.id %>">
+        <td><%= answer.details %></td>
+        <td><%= answer.type %></td>
+        <td><%= answer.is_visible %></td>
+
+        <td>
+          <span><%= live_patch "Edit", to: Routes.answer_index_path(@socket, :edit, @current_company, @retro, answer) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: answer.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Answer", to: Routes.answer_index_path(@socket, :new, @current_company, @retro) %></span>

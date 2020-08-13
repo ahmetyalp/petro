@@ -20,7 +20,7 @@ defmodule PetroWeb.CompanyController do
            %CompaniesUsers{}
            |> CompaniesUsers.changeset(%{
              company_id: company.id,
-             user_id: conn.assigns.current_user.id,
+             user_id: Pow.current_user(conn).id,
              role: "owner"
            })
            |> Repo.insert!()
@@ -67,7 +67,7 @@ defmodule PetroWeb.CompanyController do
 
   defp control_access(conn, _opts) do
     case Repo.one(
-           from cu in CompaniesUsers,
+           from CompaniesUsers,
              where: ^[company_id: conn.path_params["id"], user_id: Pow.current_user(conn).id]
          ) do
       %CompaniesUsers{role: "owner"} ->

@@ -200,6 +200,7 @@ defmodule Petro.Models do
     %Answer{}
     |> Answer.changeset(attrs)
     |> Repo.insert()
+    |> broadcast(:created)
   end
 
   @doc """
@@ -218,6 +219,21 @@ defmodule Petro.Models do
     answer
     |> Answer.changeset(attrs)
     |> Repo.update()
+    |> broadcast(:updated)
+  end
+
+  def broadcast({:ok, record}, type) do
+    Phoenix.PubSub.broadcast(
+      Petro.PubSub,
+      "retro-#{record.retro_id}",
+      {type, record.id}
+    )
+
+    {:ok, record}
+  end
+
+  def broadcast({:error, changeset}, _) do
+    {:error, changeset}
   end
 
   @doc """

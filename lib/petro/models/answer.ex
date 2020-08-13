@@ -10,8 +10,8 @@ defmodule Petro.Models.Answer do
   schema "answers" do
     field :details, :string
     field :type, :string
-    field :is_visible, :boolean
-    field :auto_visible, :boolean
+    field :is_visible, :boolean, default: false
+    field :auto_visible, :boolean, default: false
 
     belongs_to :user, User
     belongs_to :retro, Retro
@@ -22,7 +22,7 @@ defmodule Petro.Models.Answer do
   @doc false
   def changeset(answer, attrs) do
     answer
-    |> cast(attrs, [:type, :details, :is_visible])
+    |> cast(attrs, [:type, :details, :is_visible, :retro_id])
     |> validate_required([:type, :details, :is_visible])
     |> validate_inclusion(:type, @types)
   end
